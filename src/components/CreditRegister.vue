@@ -4,12 +4,14 @@
         <form @submit.prevent="submitExpense" style="width: fit-content; margin: auto;">
             <div class="inputText">
                 <label>年　　　　　　</label>
-                <input type="text" v-model="dataCredit.creditYear" required>
+                <input type="text" @blur="search" v-model="dataCredit.creditYear" required>
             </div>
             <div class="inputText">
                 <label>月　　　　　　</label>
-                <input type="text" v-model="dataCredit.creditMonth" required>
+                <input type="text" @blur="search" v-model="dataCredit.creditMonth" required>
             </div>
+            <!-- <button type="button" @click="search">検索</button>
+            <br><br> -->
             <div class="inputText">
                 <label>楽天　　　　　</label>
                 <input type="text" v-model="dataCredit.rcreditSum">
@@ -56,6 +58,7 @@ export default {
                 // 三井クレカ最終合計
                 mcreditSumLast: 0,
             },
+            resData: [],
         };
     },
 
@@ -97,6 +100,24 @@ export default {
                 .catch(error => {
                     console.error('エラー：', error);
                 });
+        },
+        async search() {
+            await axios.get('/api/serch/credit', {
+                params: {
+                    year: this.dataCredit.creditYear,
+                    month: this.dataCredit.creditMonth,
+                }
+            }).then(respons => {
+                console.log(respons.data.rcreditSum);
+                // 楽天クレカ
+                this.dataCredit.rcreditSum = respons.data.rcreditSum;
+                // 楽天ポイント
+                this.dataCredit.rcreditPoint = respons.data.rcreditPoint;
+                // 三井クレカ
+                this.dataCredit.mcreditSum = respons.data.mcreditSum;
+                // 三井ポイント
+                this.dataCredit.mcreditPoint = respons.data.mcreditPoint;
+            }).catch(error => console.log(error));
         },
         back() {
             this.$router.push({name: "menu"});

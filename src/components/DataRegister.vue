@@ -4,12 +4,14 @@
         <form @submit.prevent="submitExpense" style="width: fit-content; margin: auto;">
             <div class="inputText">
                 <label>年　　</label>
-                <input type="text" v-model="expense.dateYear" required>
+                <input type="text" @blur="search" v-model="expense.dateYear" required>
             </div>
             <div class="inputText">
                 <label>月　　</label>
-                <input type="text" v-model="expense.month" required>
+                <input type="text" @blur="search" v-model="expense.month" required>
             </div>
+            <!-- <button type="button" @click="search">検索</button>
+            <br><br> -->
             <div class="inputText">
                 <label>口座　</label>
                 <input type="text" v-model="expense.bank">
@@ -75,19 +77,42 @@ export default {
                     this.expense = {
                         dateYear: '',
                         month: '',
-                        bank: '',
-                        income: '',
-                        electricityBill: '',
-                        gasBill: '',
-                        waterBill: '',
-                        foodExpense: '',
-                        rentalCost: '',
+                        bank: 0,
+                        income: 0,
+                        electricityBill: 0,
+                        gasBill: 0,
+                        waterBill: 0,
+                        foodExpense: 0,
+                        rentalCost: 0,
                     };
                     this.$router.push({name: "menu"});
                 })
                 .catch(error => {
                     console.error('エラー：', error);
                 });
+        },
+        async search() {
+            await axios.get('/api/serch/data', {
+                params: {
+                    year: this.expense.dateYear,
+                    month: this.expense.month,
+                }
+            }).then(respons => {
+                // 口座
+                this.expense.bank = respons.data.bank;
+                // 給料
+                this.expense.income = respons.data.income;
+                // 電気代
+                this.expense.electricityBill = respons.data.electricityBill;
+                // ガス代
+                this.expense.gasBill = respons.data.gasBill;
+                // 水道代
+                this.expense.waterBill = respons.data.waterBill;
+                // 生活
+                this.expense.foodExpense = respons.data.foodExpense;
+                // 家賃
+                this.expense.rentalCost = respons.data.rentalCost;
+            }).catch(error => console.log(error));
         },
         back() {
             this.$router.push({name: "menu"});
