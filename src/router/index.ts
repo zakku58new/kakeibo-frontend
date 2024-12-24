@@ -38,7 +38,8 @@ const router = createRouter({
       name: 'regist-credit-detaile',
       component: () => {
         return import("@/components/CreditDetailRegister.vue");
-      }
+      },
+      props: true
     },
   ],
 })

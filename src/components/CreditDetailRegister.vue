@@ -5,11 +5,11 @@
         <form @submit.prevent="submitExpense" style="width: fit-content; margin: auto;">
             <div class="inputText">
                 <label>年　　　　　</label>
-                <input type="text" v-model="dataCreditDetail.creditDetailYear" requir>
+                <input type="text" v-model="dataCreditDetail.creditDetailYear" disabled>
             </div>
             <div class="inputText">
                 <label>月　　　　　</label>
-                <input type="text" v-model="dataCreditDetail.creditDetailMonth" required>
+                <input type="text" v-model="dataCreditDetail.creditDetailMonth" disabled>
             </div>
             <div class="inputText">
                 <label>年月日　　　</label>
@@ -53,9 +53,13 @@ export default {
         };
     },
 
-    created() {
+    mounted() {
         this.dataCreditDetail.creditDetailYear = this.year;
         this.dataCreditDetail.creditDetailMonth = this.month;
+        // const date = new Date(this.year, this.month-1, 1);
+        // this.dataCreditDetail.creditDate = date.toLocaleDateString();
+        this.dataCreditDetail.creditDate = this.year + "-" + this.month + "-01";
+        // alert("日付：" + this.dataCreditDetail.creditDate);
     },
 
     methods: {
@@ -81,13 +85,15 @@ export default {
                         // チェックボックス
                         checkboxStatus: false,
                     };
+                    // 登録後家計簿画面に遷移
+                    this.$router.push({name: "kakeibo", params: {year: this.year, month: this.month}});
                 })
                 .catch(error => {
                     console.error('エラー：', error);
                 });
         },
         back() {
-            this.$router.back();
+            this.$router.push({name: "kakeibo", params: {year: this.year, month: this.month}});
         },
     },
 };

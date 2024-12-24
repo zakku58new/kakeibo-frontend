@@ -206,15 +206,15 @@
         // 先月判定
         const lastMonth = 0;
         const paramYear = 0;
-        if(this.month - 1 < 1) {
-          // 一月の時
+        if(parseInt(this.month)-1 < 1) {
+          // 1月の時
           lastMonth = 12;
           // 昨年を設定する
-          paramYear = this.year - 1;
+          paramYear = parseInt(this.year) - 1;
         } else {
           // それ以外
-          lastMonth = this.month - 1;
-          paramYear = this.year;
+          lastMonth = parseInt(this.month) - 1;
+          paramYear = parseInt(this.year);
         }
         const resCredit = await axios.get('/api/serch/credit', {
           params: {
@@ -270,6 +270,7 @@
         this.$router.push({name: "menu"});
       },
       regist() {
+        console.log("受け渡し情報：dispYear:" + this.dispYear + " mon:" + this.mon);
         this.$router.push({name: "regist-credit-detaile", params: {year: this.dispYear, month: this.mon}});
       },
     },

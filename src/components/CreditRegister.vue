@@ -91,6 +91,8 @@ export default {
                         // 三井クレカ最終合計
                         mcreditSumLast: 0,
                     };
+                    // メニュー画面に戻る
+                    this.$router.push({name: "menu"});
                 })
                 .catch(error => {
                     console.error('エラー：', error);

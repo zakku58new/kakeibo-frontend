@@ -83,6 +83,7 @@ export default {
                         foodExpense: '',
                         rentalCost: '',
                     };
+                    this.$router.push({name: "menu"});
                 })
                 .catch(error => {
                     console.error('エラー：', error);
