@@ -56,8 +56,6 @@ export default {
     mounted() {
         this.dataCreditDetail.creditDetailYear = this.year;
         this.dataCreditDetail.creditDetailMonth = this.month;
-        // const date = new Date(this.year, this.month-1, 1);
-        // this.dataCreditDetail.creditDate = date.toLocaleDateString();
         this.dataCreditDetail.creditDate = this.year + "-" + this.month + "-01";
         // alert("日付：" + this.dataCreditDetail.creditDate);
     },

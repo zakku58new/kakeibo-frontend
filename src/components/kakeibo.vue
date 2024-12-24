@@ -99,7 +99,8 @@
           <p class="credit_total-sum">￥{{ creditDetailSum }}</p>
         </div>
         <div class="credit_table">クレジットカード利用履歴</div>
-        <button @click="regist">登録</button>
+        <button class="credit-button" @click="regist">登録</button>
+        <button class="credit-button" @click="update">更新</button>
         <table class="credit-table-data">
           <tbody>
             <tr v-for="(data, key) in creditDatas" :key="key">
@@ -184,16 +185,15 @@
             month: this.month
           }
         });
-        const resData = res.data;
-        this.dispYear = resData[0].dateYear;
-        this.mon = resData[0].month;
-        this.bank = resData[0].bank;
-        this.income = resData[0].income;
-        this.electricityBill = resData[0].electricityBill;
-        this.gasBill = resData[0].gasBill;
-        this.waterBill = resData[0].waterBill;
-        this.foodExpense = resData[0].foodExpense;
-        this.rentalCost = resData[0].rentalCost;
+        this.dispYear = res.data.dateYear;
+        this.mon = res.data.month;
+        this.bank = res.data.bank;
+        this.income = res.data.income;
+        this.electricityBill = res.data.electricityBill;
+        this.gasBill = res.data.gasBill;
+        this.waterBill = res.data.waterBill;
+        this.foodExpense = res.data.foodExpense;
+        this.rentalCost = res.data.rentalCost;
 
         // 生活費合計
         this.costSum = this.electricityBill + this.gasBill + this.waterBill + this.foodExpense + this.rentalCost;
@@ -204,8 +204,9 @@
       // クレカ検索
       async getCreditData(){
         // 先月判定
-        const lastMonth = 0;
-        const paramYear = 0;
+        // constは再代入できない
+        let lastMonth = 0;
+        let paramYear = 0;
         if(parseInt(this.month)-1 < 1) {
           // 1月の時
           lastMonth = 12;
@@ -223,21 +224,21 @@
           }
         });
         // // 年
-        // this.creditYear = resCredit.data[0].creditYear;
+        // this.creditYear = resCredit.data.creditYear;
         // // 月
-        // this.creditMonth = resCredit.data[0].creditMonth;
+        // this.creditMonth = resCredit.data.creditMonth;
         // 楽天クレカ合計
-        this.dataCredit.RCreditSum = resCredit.data[0].rcreditSum;
+        this.dataCredit.RCreditSum = resCredit.data.rcreditSum;
         // 楽天ポイント
-        this.dataCredit.RCreditPoint = resCredit.data[0].rcreditPoint;
+        this.dataCredit.RCreditPoint = resCredit.data.rcreditPoint;
         // 楽天クレカ最終合計
-        this.dataCredit.RCreditSumLast = resCredit.data[0].rcreditSumLast;
+        this.dataCredit.RCreditSumLast = resCredit.data.rcreditSumLast;
         // 三井クレカ合計
-        this.dataCredit.MCreditSum = resCredit.data[0].mcreditSum;
+        this.dataCredit.MCreditSum = resCredit.data.mcreditSum;
         // 三井ポイント
-        this.dataCredit.MCreditPoint = resCredit.data[0].mcreditPoint;
+        this.dataCredit.MCreditPoint = resCredit.data.mcreditPoint;
         // 三井クレカ最終合計
-        this.dataCredit.MCreditSumLast = resCredit.data[0].mcreditSumLast;
+        this.dataCredit.MCreditSumLast = resCredit.data.mcreditSumLast;
 
         // クレカ合計
         this.creditSum = this.dataCredit.RCreditSumLast + this.dataCredit.MCreditSumLast;
@@ -272,6 +273,17 @@
       regist() {
         console.log("受け渡し情報：dispYear:" + this.dispYear + " mon:" + this.mon);
         this.$router.push({name: "regist-credit-detaile", params: {year: this.dispYear, month: this.mon}});
+      },
+      async update() {
+        // console.log(this.creditDatas);
+        await axios.post('/api/update/creditDetail', this.creditDatas)
+        .then(respons => {
+          console.log(this.creditDatas);
+          alert("クレカ情報更新！");
+        })
+        .catch(error => {
+          console.error('エラー：', error);
+        });
       },
     },
   };
@@ -370,5 +382,8 @@
     width: 40%;
     border: 1px solid;
     padding: 5px;
+  }
+  .credit-button {
+    margin: 10px;
   }
   </style>
