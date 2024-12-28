@@ -56,8 +56,12 @@ export default {
     mounted() {
         this.dataCreditDetail.creditDetailYear = this.year;
         this.dataCreditDetail.creditDetailMonth = this.month;
-        this.dataCreditDetail.creditDate = this.year + "-" + this.month + "-01";
-        // alert("日付：" + this.dataCreditDetail.creditDate);
+        if (this.month < 10){
+            this.dataCreditDetail.creditDate = this.year + "-0" + this.month + "-01";
+        } else {
+            this.dataCreditDetail.creditDate = this.year + "-" + this.month + "-01";
+        }
+        // alert("日付：" +  this.year + "-" + this.month + "-01");
     },
 
     methods: {

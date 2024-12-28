@@ -108,6 +108,7 @@
               <td class="credit-table-column">￥{{ data.amount }}</td>
               <td class="credit-table-column">{{ data.purchasedItems }}</td>
               <td class="credit-table-column"><input type="checkbox" v-model="data.checkboxStatus"></td>
+              <td class="credit-table-column"><button @click="deleteData(data);">削除</button></td>
             </tr>
           </tbody>
         </table>
@@ -274,12 +275,24 @@
         console.log("受け渡し情報：dispYear:" + this.dispYear + " mon:" + this.mon);
         this.$router.push({name: "regist-credit-detaile", params: {year: this.dispYear, month: this.mon}});
       },
+      // クレカ詳細更新
       async update() {
         // console.log(this.creditDatas);
         await axios.post('/api/update/creditDetail', this.creditDatas)
         .then(respons => {
           console.log(this.creditDatas);
           alert("クレカ情報更新！");
+        })
+        .catch(error => {
+          console.error('エラー：', error);
+        });
+      },
+      // クレカ詳細削除
+      async deleteData(data) {
+        await axios.post('/api/delete/creditDetail', data)
+        .then(respons => {
+          console.log(data);
+          alert("クレカ情報削除！");
         })
         .catch(error => {
           console.error('エラー：', error);
