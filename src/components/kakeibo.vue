@@ -104,11 +104,11 @@
         <table class="credit-table-data">
           <tbody>
             <tr v-for="(data, key) in creditDatas" :key="key">
-              <td class="credit-table-column">{{ data.creditDate }}</td>
-              <td class="credit-table-column">￥{{ data.amount }}</td>
-              <td class="credit-table-column">{{ data.purchasedItems }}</td>
-              <td class="credit-table-column"><input type="checkbox" v-model="data.checkboxStatus"></td>
-              <td class="credit-table-column"><button @click="deleteData(data);">削除</button></td>
+              <td class="credit-table-creditDate">{{ data.creditDate }}</td>
+              <td class="credit-table-amount">￥{{ data.amount }}</td>
+              <td class="credit-table-purchasedItems">{{ data.purchasedItems }}</td>
+              <td class="credit-table-button"><input type="checkbox" v-model="data.checkboxStatus"></td>
+              <td class="credit-table-button"><button @click="deleteData(data);" style="height: 40px; width: 100%;">削除</button></td>
             </tr>
           </tbody>
         </table>
@@ -386,17 +386,35 @@
   .credit_table {
     margin: 5px;
   }
-  .credit-table-data {
-    margin: auto;
-    margin-top: 20px;
-    border: 1px solid;
-  }
-  .credit-table-column {
-    width: 40%;
-    border: 1px solid;
-    padding: 5px;
-  }
   .credit-button {
     margin: 10px;
+    height: 40px;
+    width: 60px;
+  }
+  .credit-table-data {
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    border: 1px solid;
+  }
+  tr {
+    height: 40px;
+  }
+  .credit-table-creditDate {
+    width: 20%;
+    border: 1px solid;
+  }
+  .credit-table-amount {
+    width: 30%;
+    border: 1px solid;
+  }
+  .credit-table-purchasedItems {
+    width: 40%;
+    border: 1px solid;
+  }
+  .credit-table-button {
+    text-align: center;
+    width: 5%;
+    border: 1px solid;
   }
   </style>

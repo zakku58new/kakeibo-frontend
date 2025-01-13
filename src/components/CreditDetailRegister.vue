@@ -39,7 +39,7 @@
                     <td class="credit-table-creditDate">{{ data.creditDate }}</td>
                     <td class="credit-table-amount">￥{{ data.amount }}</td>
                     <td class="credit-table-purchasedItems">{{ data.purchasedItems }}</td>
-                    <td class="credit-table-button"><button>削除</button></td>
+                    <td class="credit-table-button"><button @click="deleteRow(key)">削除</button></td>
                 </tr>
             </tbody>
         </table>
@@ -123,7 +123,12 @@ export default {
             this.creditDetailDay = '1';
         },
 
-        // todo削除ボタン押下時
+        // 削除ボタン押下時
+        deleteRow(index) {
+            // 配列の要素を削除する時
+            // <配列>.splice(<始まりのインデックス>, <削除する要素数>)
+            this.creditData.splice(index, 1);
+        },
 
         // データ登録
         async submitExpense() {
@@ -157,6 +162,8 @@ export default {
     }
     button {
         margin: 20px;
+        height: 40px;
+        width: 60px;
     }
     .credit-table-data {
         width: 60%;

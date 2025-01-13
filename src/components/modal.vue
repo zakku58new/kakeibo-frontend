@@ -1,7 +1,7 @@
 <template>
   <div v-if="isOpen" class="modal-overlay">
     <div class="modal">
-        <button @click="close">閉じる</button>
+        <button class="close-button" @click="close">閉じる</button>
         <div class="data-table">
             <table>
                 <tbody>
@@ -54,32 +54,42 @@ export default {
 </script>
 
 <style scoped>
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.modal {
-    background: white;
-    padding: 20px;
-    border-radius: 4px;
-    width: 50%;
-    height: 60%;
-    min-width: 300px;
-}
-table {
-    margin: 10px auto;
-}
-.data-button {
-    width: 600px;
-    /* margin: 10px; */
-    padding: 10px;
-    justify-content: space-between;
-}
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .modal {
+        background: white;
+        padding: 20px;
+        border-radius: 4px;
+        width: 50%;
+        height: 60%;
+        min-width: 300px;
+    }
+    .close-button {
+        height: 40px;
+        width: 60px;
+    }
+    .data-table {
+        padding: 10px;
+    }
+    table {
+        width: 100%;
+    }
+    td {
+        width: 100%;
+        padding: 3px;
+    }
+    .data-button {
+        width: 100%;
+        padding: 10px;
+        justify-content: space-between;
+    }
 </style>

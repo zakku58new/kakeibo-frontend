@@ -131,5 +131,7 @@ export default {
     }
     button {
         margin: 20px;
+        height: 40px;
+        width: 60px;
     }
 </style>
