@@ -96,7 +96,7 @@
       <div class="pay_month">
         <div class="credit_total">
           <p>今月クレカ合計</p>
-          <p class="credit_total-sum">￥{{ creditDetailSum }}</p>
+          <p class="credit_total-sum">￥{{ creditDetailSum }}（チェック済：￥{{ checkedCreditDetailSum }}）</p>
         </div>
         <div class="credit_table">クレジットカード利用履歴</div>
         <button class="credit-button" @click="regist">登録</button>
@@ -161,6 +161,8 @@
         creditDatas:[],
         // 今月クレカ合計
         creditDetailSum: 0,
+        // 今月クレカ合計_チェック済み
+        checkedCreditDetailSum: 0,
       };
     },
     mounted() {
@@ -264,9 +266,14 @@
           this.creditDatas = respons.data,
         ).catch(error => console.log(error));
 
-        this.creditDatas.forEach(data =>
-            this.creditDetailSum = this.creditDetailSum + data.amount
-        );
+        this.creditDatas.forEach(data => {
+          // 今月クレカ合計
+          this.creditDetailSum = this.creditDetailSum + data.amount;
+          // チェック済の今月クレカ合計
+          if(data.checkboxStatus){
+            this.checkedCreditDetailSum = this.checkedCreditDetailSum + data.amount
+          };
+        });
       },
       back() {
         this.$router.push({name: "menu"});
