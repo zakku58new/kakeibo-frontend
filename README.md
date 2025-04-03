@@ -1,39 +1,6 @@
-# kakeibo
+# 家計簿アプリ
 
-This template should help get you started developing with Vue 3 in Vite.
+家計簿アプリのフロントエンドです。
+汎用的なものではなく、作者自身が利用することを想定しているため、独自の仕様となっている箇所があります。
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+アプリの動作時の画面表示や動きなどについては、「家計簿アプリ概要」内の「家計簿アプリ概要.xlsx」をご確認ください。
