@@ -78,7 +78,10 @@ export default {
         width: 60px;
     }
     .data-table {
-        padding: 10px;
+        /* padding: 10px; */
+        margin: 10px;
+        height: 90%;
+        overflow-y: scroll;
     }
     table {
         width: 100%;
