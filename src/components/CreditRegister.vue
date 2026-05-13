@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api/client';
 
 export default {
     data() {
@@ -72,7 +73,8 @@ export default {
             this.dataCredit.mcreditSumLast = this.dataCredit.mcreditSum - this.dataCredit.mcreditPoint;
 
             // Axioを使ってAPIにデータを送信
-            await axios.post('/api/regist/credit', this.dataCredit)
+            // await axios.post('/api/regist/credit', this.dataCredit)
+            await api.post('/regist/credit', this.dataCredit)
                 .then(response => {
                     console.log('登録処理:', response.data);
                     // フォームをリセット
@@ -102,7 +104,8 @@ export default {
                 });
         },
         async search() {
-            await axios.get('/api/serch/credit', {
+            // await axios.get('/api/serch/credit', {
+            await api.get('/serch/credit', {
                 params: {
                     year: this.dataCredit.creditYear,
                     month: this.dataCredit.creditMonth,

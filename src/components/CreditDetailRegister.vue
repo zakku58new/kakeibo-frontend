@@ -50,7 +50,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api/client';
 
 export default {
     props: ['year', 'month'],
@@ -120,7 +121,7 @@ export default {
                 checkboxStatus: false,
             };
             // 日
-            this.creditDetailDay = '1';
+            // this.creditDetailDay = '1';
         },
 
         // 削除ボタン押下時
@@ -134,7 +135,8 @@ export default {
         async submitExpense() {
             console.log('送信処理')
             // Axioを使ってAPIにデータを送信
-            await axios.post('/api/regist/creditDetail', this.creditData)
+            // await axios.post('/api/regist/creditDetail', this.creditData)
+            await api.post('/regist/creditDetail', this.creditData)
                 .then(response => {
                     console.log('登録処理:', response.data);
                     // 登録後家計簿画面に遷移

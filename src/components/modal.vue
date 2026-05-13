@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api/client';
 
 export default {
     props: {
@@ -46,7 +47,10 @@ export default {
         },
 
         async getdata() {
-            const res = await axios.get('/api/index');
+            // const res = await axios.get('/api/index');
+            // const res = await axios.get('http://localhost:8080/index');
+            // const res = await axios.get(`${import.meta.env.VITE_API_URL}/index`);
+            const res = await api.get('/index');
             this.respons = res.data;
         }
     },

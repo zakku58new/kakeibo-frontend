@@ -47,7 +47,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api/client';
 
 export default {
     data() {
@@ -70,7 +71,8 @@ export default {
         async submitExpense() {
             console.log('送信処理')
             // Axioを使ってAPIにデータを送信
-            await axios.post('/api/regist', this.expense)
+            // await axios.post('/api/regist', this.expense)
+            await api.post('/regist', this.expense)
                 .then(response => {
                     console.log('登録処理:', response.data);
                     // フォームをリセット
@@ -92,7 +94,8 @@ export default {
                 });
         },
         async search() {
-            await axios.get('/api/serch/data', {
+            // await axios.get('/api/serch/data', {
+            await api.get('/serch/data', {
                 params: {
                     year: this.expense.dateYear,
                     month: this.expense.month,

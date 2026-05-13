@@ -4,7 +4,7 @@ import router from './router'
 
 const app = createApp(App)
 
-// ルーティングのたえに必要
+// ルーティングのために必要
 app.use(router)
 
 app.mount('#app')

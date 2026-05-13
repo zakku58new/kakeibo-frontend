@@ -96,18 +96,21 @@
       <div class="pay_month">
         <div class="credit_total">
           <p>今月クレカ合計</p>
-          <p class="credit_total-sum">￥{{ creditDetailSum }}（チェック済：￥{{ checkedCreditDetailSum }}）</p>
+          <div>
+            <p class="credit_total-sum">￥{{ creditDetailSum }}（チェック済：￥{{ checkedCreditDetailSum }}）</p>
+            <p>（三井クレカ￥15000を加算した合計：￥{{ creditDetailSumPreTotal }}）</p>
+          </div>
         </div>
         <div class="credit_table">クレジットカード利用履歴</div>
         <button class="credit-button" @click="regist">登録</button>
         <button class="credit-button" @click="update">更新</button>
-        <table class="credit-table-data">
+        <table class="credit-table-data" v-if="this.creditDatas.length != 0">
           <tbody>
             <tr v-for="(data, key) in creditDatas" :key="key">
               <td class="credit-table-creditDate">{{ data.creditDate }}</td>
               <td class="credit-table-amount">￥{{ data.amount }}</td>
               <td class="credit-table-purchasedItems">{{ data.purchasedItems }}</td>
-              <td class="credit-table-button"><input type="checkbox" v-model="data.checkboxStatus"></td>
+              <td class="credit-table-button"><input type="checkbox" class="big-checkbox" v-model="data.checkboxStatus"></td>
               <td class="credit-table-button"><button @click="deleteData(data);" style="height: 40px; width: 100%;">削除</button></td>
             </tr>
           </tbody>
@@ -117,7 +120,8 @@
   </template>
   
   <script>
-  import axios from 'axios';
+  // import axios from 'axios';
+  import api from '../api/client';
   
   export default {
     props: ['year', 'month'],
@@ -163,6 +167,9 @@
         creditDetailSum: 0,
         // 今月クレカ合計_チェック済み
         checkedCreditDetailSum: 0,
+        
+        // 参考データ、15000を足した金額
+        creditDetailSumPreTotal: 0
       };
     },
     mounted() {
@@ -182,7 +189,8 @@
       // },
       // 生活費検索
       async getData(){
-        const res = await axios.get('/api/serch/data', {
+        // const res = await axios.get('/api/serch/data', {
+        const res = await api.get('/serch/data', {
           params: {
             year: this.year,
             month: this.month
@@ -220,7 +228,8 @@
           lastMonth = parseInt(this.month) - 1;
           paramYear = parseInt(this.year);
         }
-        const resCredit = await axios.get('/api/serch/credit', {
+        // const resCredit = await axios.get('/api/serch/credit', {
+        const resCredit = await api.get('/serch/credit', {
           params: {
             year: paramYear,
             month: lastMonth
@@ -257,7 +266,8 @@
       },
       // 今月のクレカ詳細
       async getCreditDetails(){
-        await axios.get('/api/serch/creditDetail', {
+        // await axios.get('/api/serch/creditDetail', {
+        await api.get('/serch/creditDetail', {
           params: {
             year: this.year,
             month: this.month,
@@ -274,6 +284,8 @@
             this.checkedCreditDetailSum = this.checkedCreditDetailSum + data.amount
           };
         });
+        // 参考データ15000円を加算した金額を計算
+        this.creditDetailSumPreTotal = this.creditDetailSum + 15000;
       },
       back() {
         this.$router.push({name: "menu"});
@@ -285,7 +297,8 @@
       // クレカ詳細更新
       async update() {
         // console.log(this.creditDatas);
-        await axios.post('/api/update/creditDetail', this.creditDatas)
+        // await axios.post('/api/update/creditDetail', this.creditDatas)
+        await api.post('/update/creditDetail', this.creditDatas)
         .then(respons => {
           console.log(this.creditDatas);
           alert("クレカ情報更新！");
@@ -296,7 +309,8 @@
       },
       // クレカ詳細削除
       async deleteData(data) {
-        await axios.post('/api/delete/creditDetail', data)
+        // await axios.post('/api/delete/creditDetail', data)
+        await api.post('/delete/creditDetail', data)
         .then(respons => {
           console.log(data);
           alert("クレカ情報削除！");
@@ -389,6 +403,7 @@
   .credit_total-sum {
     margin: auto 20px;
     text-decoration: underline;
+    text-align: right;
   }
   .credit_table {
     margin: 5px;
@@ -423,5 +438,11 @@
     text-align: center;
     width: 5%;
     border: 1px solid;
+  }
+  .big-checkbox {
+    /* transform: scale(1.5); */
+    transform: scale(2.5);
+    /* width: 40px;
+    height: 30px; */
   }
   </style>
